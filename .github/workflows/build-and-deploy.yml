@@ -18,7 +18,7 @@ env:
   FIREBASE_API_KEY: ${{ github.ref == 'refs/heads/master' && vars.PRODUCTION_FIREBASE_API_KEY || vars.STAGING_FIREBASE_API_KEY }}
 jobs:
   build-and-deploy:
-    runs-on: [self-hosted, "${{ github.ref == 'refs/heads/master' && 'Production' || 'Staging' }}"]
+    runs-on: [self-hosted, Production] #"${{ github.ref == 'refs/heads/master' && 'Production' || 'Staging' }}"
     permissions:
       contents: write
       id-token: write
