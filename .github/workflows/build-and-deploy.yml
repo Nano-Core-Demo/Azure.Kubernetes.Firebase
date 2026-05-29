@@ -18,7 +18,10 @@ env:
   FIREBASE_API_KEY: ${{ github.ref == 'refs/heads/master' && vars.PRODUCTION_FIREBASE_API_KEY || vars.STAGING_FIREBASE_API_KEY }}
 jobs:
   build-and-deploy:
-    runs-on: [self-hosted, linux, "${{ github.ref == 'refs/heads/master' && 'Production' || 'Staging' }}"]
+    runs-on:
+      - self-hosted
+      - linux 
+      - ${{ github.ref == 'refs/heads/master' && 'Production' || 'Staging' }}
     permissions:
       contents: write
       id-token: write
@@ -27,6 +30,11 @@ jobs:
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v6
+      - uses: azure/setup-azurecli@v4
+      - uses: azure/setup-kubectl@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
 
       - name: Azure Login
         shell: pwsh
